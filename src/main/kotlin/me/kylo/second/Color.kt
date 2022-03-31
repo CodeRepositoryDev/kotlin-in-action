@@ -13,13 +13,13 @@ enum class Color(val r: Int, val g: Int, val b: Int) {
 
     fun getMnemonic(color: Color) =
         when (color) {
-            Color.RED -> "Richard"
-            Color.ORANGE -> "Of"
-            Color.YELLOW -> "York"
-            Color.GREEN -> "Gave"
-            Color.BLUE -> "Battle"
-            Color.INDIGO -> "In"
-            Color.VIOLET -> "Van"
+            RED -> "Richard"
+            ORANGE -> "Of"
+            YELLOW -> "York"
+            GREEN -> "Gave"
+            BLUE -> "Battle"
+            INDIGO -> "In"
+            VIOLET -> "Van"
         }
 
     fun getWarmth(color: Color) =
@@ -31,10 +31,23 @@ enum class Color(val r: Int, val g: Int, val b: Int) {
 
     fun mix(firstColor: Color, secondColor: Color) =
         when (setOf(firstColor, secondColor)) {
-            setOf(RED,YELLOW) -> ORANGE
+            setOf(RED, YELLOW) -> ORANGE
             setOf(YELLOW, BLUE) -> GREEN
             setOf(BLUE, VIOLET) -> INDIGO
             setOf(RED, BLUE) -> VIOLET
+            else -> throw Exception("Dirty Color")
+        }
+
+    fun mixOptimized(firstColor: Color, secondColor: Color) =
+        when {
+            (firstColor == RED && secondColor == YELLOW) || (firstColor == YELLOW && secondColor == RED) ->
+                ORANGE
+            (firstColor == YELLOW && secondColor == BLUE) || (firstColor == BLUE && secondColor == YELLOW) ->
+                GREEN
+            (firstColor == BLUE && secondColor == VIOLET) || (firstColor == VIOLET && secondColor == BLUE) ->
+                INDIGO
+            (firstColor == RED && secondColor == BLUE) || (firstColor == BLUE && secondColor == RED) ->
+                VIOLET
             else -> throw Exception("Dirty Color")
         }
 }
